@@ -1,0 +1,16 @@
+# ビルドで生成されるバイナリ
+/main
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# 環境変数ファイル
+.env
+
+# エディタ設定
+.vscode/
+.idea/
+
+.DS_Store
