@@ -1,0 +1,8 @@
+# lefthook.yml
+
+output: false
+
+commit-msg:
+  scripts:
+    "check-commit-msg":
+      runner: bash
