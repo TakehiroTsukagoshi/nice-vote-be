@@ -12,7 +12,7 @@ pre-commit:
     # 2. 静的解析
     golangci-lint:
       glob: "*.go"
-      run: golangci-lint run --new-from-rev={last_commit} {staged_files}
+      run: golangci-lint run --new-from-rev=HEAD {staged_files}
       stage_fixed: true
     # 3. 未使用インポートの整理・自動補正
     goimports:
