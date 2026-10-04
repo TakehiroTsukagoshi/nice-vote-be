@@ -2,6 +2,23 @@
 
 output: false
 
+pre-commit:
+  commands:
+    # 1. コードフォーマット（自動修正あり）
+    gofmt:
+      glob: "*.go"
+      run: go fmt {staged_files}
+      stage_fixed: true
+    # 2. 静的解析
+    golangci-lint:
+      glob: "*.go"
+      run: golangci-lint run --new-from-rev={last_commit} {staged_files}
+      stage_fixed: true
+    # 3. 未使用インポートの整理・自動補正
+    goimports:
+      glob: "*.go"
+      run: goimports -w {staged_files}
+      stage_fixed: true
 commit-msg:
   scripts:
     "check-commit-msg":
