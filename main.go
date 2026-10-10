@@ -16,7 +16,7 @@ type Poll struct {
 	VotesCount int    `json:"votes_count"`
 }
 
-func main() {
+func SetupRouter() *gin.Engine {
 	// Gin のルーター（ルーターインスタンス）を初期化
 	r := gin.Default()
 
@@ -47,6 +47,11 @@ func main() {
 		c.JSON(http.StatusOK, gin.H{"polls": polls})
 	})
 
+	return r
+}
+
+func main() {
+	r := SetupRouter()
 	// サーバーの起動 (ポート 8080 で待機)
 	if err := r.Run(":8080"); err != nil {
 		log.Fatalf("Failed to start server: %v", err)
