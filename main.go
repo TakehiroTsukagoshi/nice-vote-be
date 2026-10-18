@@ -2,7 +2,9 @@ package main
 
 import (
 	"log"
+	"math/rand"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -45,6 +47,22 @@ func SetupRouter() *gin.Engine {
 			{ID: "2", Title: "好きなエディタは？", VotesCount: 18},
 		}
 		c.JSON(http.StatusOK, gin.H{"polls": polls})
+	})
+
+	// 新規投票を作成する POST エンドポイント
+	r.POST("/api/polls", func(c *gin.Context) {
+		var newPoll Poll
+
+		if err := c.ShouldBindJSON(&newPoll); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		randomId := rand.Intn(10000) + 1
+		newPoll.ID = strconv.Itoa(randomId)
+		newPoll.VotesCount = 0
+
+		c.JSON(http.StatusCreated, gin.H{"poll": newPoll})
 	})
 
 	return r
