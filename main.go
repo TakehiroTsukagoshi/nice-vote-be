@@ -18,6 +18,11 @@ type Poll struct {
 	VotesCount int    `json:"votes_count"`
 }
 
+var polls = []Poll{
+	{ID: "1", Title: "好きなプログラミング言語は？", VotesCount: 42},
+	{ID: "2", Title: "好きなエディタは？", VotesCount: 18},
+}
+
 func SetupRouter() *gin.Engine {
 	// Gin のルーター（ルーターインスタンス）を初期化
 	r := gin.Default()
@@ -42,10 +47,6 @@ func SetupRouter() *gin.Engine {
 
 	// アンケート向けのダミーデータを返すAPI
 	r.GET("/api/polls", func(c *gin.Context) {
-		polls := []Poll{
-			{ID: "1", Title: "好きなプログラミング言語は？", VotesCount: 42},
-			{ID: "2", Title: "好きなエディタは？", VotesCount: 18},
-		}
 		c.JSON(http.StatusOK, gin.H{"polls": polls})
 	})
 
@@ -61,6 +62,8 @@ func SetupRouter() *gin.Engine {
 		randomId := rand.Intn(10000) + 1
 		newPoll.ID = strconv.Itoa(randomId)
 		newPoll.VotesCount = 0
+
+		polls = append(polls, newPoll)
 
 		c.JSON(http.StatusCreated, gin.H{"poll": newPoll})
 	})
